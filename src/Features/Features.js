@@ -1,43 +1,29 @@
-import React, { Component } from "react";
-import slugify from "slugify";
+import React, { Component } from 'react';
+import FeatureItems from '../FeatureItems/FeatureItems';
 
 export default class Features extends Component {
   render() {
-    const features = Object.keys(this.props.STORE).map((feature, idx) => {
-      const featureHash = feature + "-" + idx;
-      const options = this.props.STORE[feature].map(item => {
-        const itemHash = slugify(JSON.stringify(item));
-        return (
-          <div key={itemHash} className="feature__item">
-            <input
-              type="radio"
-              id={itemHash}
-              className="feature__option"
-              name={slugify(feature)}
-              checked={item.name === this.props.selected[feature].name}
-              onChange={e => this.props.updateFeature(feature, item)}
-            />
-            <label htmlFor={itemHash} className="feature__label">
-              {item.name} ({this.props.USCurrencyFormat.format(item.cost)})
-            </label>
-          </div>
-        );
-      });
-
-      return (
-        <fieldset className="feature" key={featureHash}>
-          <legend className="feature__name">
-            <h3>{feature}</h3>
-          </legend>
-          {options}
-        </fieldset>
-      );
-    });
-
     return (
       <div>
         <h2>Customize your laptop</h2>
-        {features}
+        {Object.keys(this.props.STORE).map((feature, idx) => {
+          return (
+            <fieldset className="feature" key={feature + '-' + idx}>
+              <legend className="feature__name">
+                <h3>{feature}</h3>
+              </legend>
+              <FeatureItems
+                feature={feature}
+                selected={this.props.selected}
+                items={this.props.STORE[feature]}
+                updateFeature={this.props.updateFeature}
+                featureHash={feature + '-' + idx}
+                USCurrencyFormat={this.props.USCurrencyFormat}
+                STORE={this.props.STORE}
+              />
+            </fieldset>
+          );
+        })}
       </div>
     );
   }
