@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import './CartList.css';
 
 export default class CartList extends Component {
   render() {

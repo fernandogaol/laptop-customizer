@@ -1,4 +1,5 @@
 import React from 'react';
+import './Options.css';
 
 export default function FeatureList(props) {
   const { feature, featureHash } = props;
